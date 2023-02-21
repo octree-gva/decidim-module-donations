@@ -13,9 +13,8 @@ module Decidim
           end
         end
       end
-
-      initializer "decidim_donations.assets" do |app|
-        app.config.assets.precompile += %w(decidim_donations_manifest.css decidim_donations_manifest.js)
+      initializer "decidim_donations.webpacker.assets_path" do
+        Decidim.register_assets_path File.expand_path("app/packs", root)
       end
 
       initializer "decidim_donations.add_cells_view_paths" do
@@ -35,6 +34,7 @@ module Decidim
             settings.attribute :start_date, type: :text, default: nil # SettingsManifest does not have date type
           end
         end
+        
         Decidim.content_blocks.register(:participatory_process_group_homepage, :donations) do |content_block|
           content_block.cell = "decidim/donations/content_blocks/donations"
           content_block.public_name_key = "decidim.donations.content_blocks.donations.name"
